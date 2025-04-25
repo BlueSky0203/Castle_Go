@@ -1,0 +1,38 @@
+info:
+  contact: {}
+paths:
+  /upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 上傳一張圖片並上傳至 Cloudinary，回傳圖片 URL
+      parameters:
+      - description: 要上傳的圖片
+        in: formData
+        name: image
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 上傳城堡圖片
+      tags:
+      - 圖片上傳
+swagger: "2.0"

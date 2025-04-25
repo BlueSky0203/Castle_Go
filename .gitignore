@@ -1,0 +1,44 @@
+# Go build artifacts
+/bin/
+/obj/
+/*.exe
+/*.exe~
+/*.dll
+/*.so
+/*.dylib
+/*.test
+
+# Go workspace files
+/go.work
+/go.work.sum
+
+# Dependency directories
+/vendor/
+
+# IDE and editor directories
+.idea/
+.vscode/
+*.swp
+*~
+
+# Go test binary, often created with `go test`
+*.test
+
+# Go coverage reports
+*.cov
+
+# Cloudinary config files (if applicable)
+.cloudinary/
+
+# Log files
+*.log
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Local environment variables file
+.env
+
+# IDE-specific settings
+*.iml
