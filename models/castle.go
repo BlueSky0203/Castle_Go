@@ -3,7 +3,7 @@ package model
 import "time"
 
 type Castle struct {
-	ID          uint      `json:"id" gorm:"primaryKey"`
+	ID          uint      `json:"id" gorm:"primaryKey" swaggerignore:"true"`
 	Name        string    `json:"name"`
 	NameZh      string    `json:"name_zh"`
 	Description string    `json:"description"`
@@ -11,8 +11,8 @@ type Castle struct {
 	Type        int       `json:"type"`
 	ImageURL    string    `json:"image_url"`
 	BuildYear   int       `json:"build_year"`
-	CreatedAt   time.Time `json:"created_at" gorm:"autoCreateTime"`
-	UpdatedAt   time.Time `json:"updated_at" gorm:"autoUpdateTime"`
+	CreatedAt   time.Time `json:"-" gorm:"autoCreateTime"`
+	UpdatedAt   time.Time `json:"-" gorm:"autoUpdateTime"`
 }
 
 func (Castle) TableName() string {

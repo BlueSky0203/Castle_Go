@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 
 	models "Castle_Go/models"
@@ -28,20 +27,14 @@ func UploadCastleImage(c *gin.Context) {
 		return
 	}
 
-	// 存到本地暫存
-	filePath := fmt.Sprintf("./%s", file.Filename)
-	if err := c.SaveUploadedFile(file, filePath); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Image save failed"})
-		return
-	}
-
-	// 上傳到 Cloudinary
-	uploadResult, err := utils.UploadImage(filePath)
+	// 直接上传到 Cloudinary，不需要保存到本地
+	uploadResult, err := utils.UploadImageFromFile(file)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Cloudinary upload failed"})
 		return
 	}
 
+	// 返回上传的图片 URL
 	c.JSON(http.StatusOK, gin.H{"image_url": uploadResult.SecureURL})
 }
 

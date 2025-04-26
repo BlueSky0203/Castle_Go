@@ -154,14 +154,8 @@ const docTemplate = `{
                 "country": {
                     "type": "string"
                 },
-                "created_at": {
-                    "type": "string"
-                },
                 "description": {
                     "type": "string"
-                },
-                "id": {
-                    "type": "integer"
                 },
                 "image_url": {
                     "type": "string"
@@ -174,9 +168,6 @@ const docTemplate = `{
                 },
                 "type": {
                     "type": "integer"
-                },
-                "updated_at": {
-                    "type": "string"
                 }
             }
         },
