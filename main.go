@@ -4,7 +4,8 @@ import (
 	"log"
 	"os"
 
-	"Castle_Go/routes"
+	routes "Castle_Go/router"
+	"Castle_Go/utils"
 
 	"github.com/joho/godotenv"
 
@@ -21,6 +22,9 @@ func main() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+
+	// 嘗試連接資料庫
+	utils.ConnectDatabase()
 
 	// 創建 Gin 實例
 	r := gin.Default()

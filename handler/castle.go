@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"Castle_Go/model"
 	"Castle_Go/utils"
 
 	"github.com/gin-gonic/gin"
@@ -45,4 +46,20 @@ func UploadCastleImage(c *gin.Context) {
 		"message":  "Upload successful",
 		"imageUrl": uploadResult.SecureURL,
 	})
+}
+
+// GetAllCastleTypes 取得所有城堡類型
+// @Summary 取得所有城堡類型
+// @Tags CastleType
+// @Produce json
+// @Success 200 {array} model.CastleType
+// @Router /castle-types [get]
+func GetAllCastleTypes(c *gin.Context) {
+	var types []model.CastleType
+
+	if err := utils.DB.Find(&types).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "無法取得城堡類型資料"})
+		return
+	}
+	c.JSON(http.StatusOK, types)
 }

@@ -1,6 +1,34 @@
+definitions:
+  model.CastleType:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      name_zh:
+        type: string
+    type: object
 info:
   contact: {}
 paths:
+  /castle-types:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.CastleType'
+            type: array
+      summary: 取得所有城堡類型
+      tags:
+      - CastleType
   /upload:
     post:
       consumes:
