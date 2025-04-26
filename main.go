@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	routes "Castle_Go/router"
+	"Castle_Go/routes"
 	"Castle_Go/utils"
 
 	"github.com/joho/godotenv"

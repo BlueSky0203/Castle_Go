@@ -1,4 +1,27 @@
 definitions:
+  model.Castle:
+    properties:
+      build_year:
+        type: integer
+      country:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      image_url:
+        type: string
+      name:
+        type: string
+      name_zh:
+        type: string
+      type:
+        type: integer
+      updated_at:
+        type: string
+    type: object
   model.CastleType:
     properties:
       created_at:
@@ -29,13 +52,48 @@ paths:
       summary: 取得所有城堡類型
       tags:
       - CastleType
-  /upload:
+  /create-castle:
+    post:
+      consumes:
+      - application/json
+      description: 新增一筆城堡資料
+      parameters:
+      - description: 城堡資料
+        in: body
+        name: castle
+        required: true
+        schema:
+          $ref: '#/definitions/model.Castle'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 新增城堡
+      tags:
+      - 城堡
+  /upload-castle-image:
     post:
       consumes:
       - multipart/form-data
-      description: 上傳一張圖片並上傳至 Cloudinary，回傳圖片 URL
+      description: 上傳城堡圖片並儲存至 Cloudinary，返回圖片 URL
       parameters:
-      - description: 要上傳的圖片
+      - description: 城堡圖片
         in: formData
         name: image
         required: true
@@ -46,7 +104,8 @@ paths:
         "200":
           description: OK
           schema:
-            additionalProperties: true
+            additionalProperties:
+              type: string
             type: object
         "400":
           description: Bad Request

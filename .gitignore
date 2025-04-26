@@ -50,3 +50,5 @@ tmp/
 *.exe
 *.out
 *.log
+
+*.jpg

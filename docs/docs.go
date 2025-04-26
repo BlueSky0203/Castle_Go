@@ -37,26 +37,28 @@ const docTemplate = `{
                 }
             }
         },
-        "/upload": {
+        "/create-castle": {
             "post": {
-                "description": "上傳一張圖片並上傳至 Cloudinary，回傳圖片 URL",
+                "description": "新增一筆城堡資料",
                 "consumes": [
-                    "multipart/form-data"
+                    "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "圖片上傳"
+                    "城堡"
                 ],
-                "summary": "上傳城堡圖片",
+                "summary": "新增城堡",
                 "parameters": [
                     {
-                        "type": "file",
-                        "description": "要上傳的圖片",
-                        "name": "image",
-                        "in": "formData",
-                        "required": true
+                        "description": "城堡資料",
+                        "name": "castle",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Castle"
+                        }
                     }
                 ],
                 "responses": {
@@ -87,9 +89,97 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/upload-castle-image": {
+            "post": {
+                "description": "上傳城堡圖片並儲存至 Cloudinary，返回圖片 URL",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "圖片上傳"
+                ],
+                "summary": "上傳城堡圖片",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "城堡圖片",
+                        "name": "image",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "model.Castle": {
+            "type": "object",
+            "properties": {
+                "build_year": {
+                    "type": "integer"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "image_url": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "name_zh": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
         "model.CastleType": {
             "type": "object",
             "properties": {

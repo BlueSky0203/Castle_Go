@@ -7,6 +7,7 @@ import (
 )
 
 func SetupRoutes(r *gin.Engine) {
-	r.POST("/upload", handlers.UploadCastleImage)
+	r.POST("/upload-castle-image", handlers.UploadCastleImage)
+	r.POST("/create-castle", handlers.CreateCastle)
 	r.GET("/castle-types", handlers.GetAllCastleTypes)
 }
