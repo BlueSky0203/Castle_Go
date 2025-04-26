@@ -1,6 +1,9 @@
-package model
+package models
 
-import "time"
+import (
+	"Castle_Go/utils"
+	"time"
+)
 
 type Castle struct {
 	ID          uint      `json:"id" gorm:"primaryKey" swaggerignore:"true"`
@@ -17,6 +20,25 @@ type Castle struct {
 
 func (Castle) TableName() string {
 	return "castle"
+}
+
+func GetCastleList(page, pageSize int) ([]Castle, int64, error) {
+	var castles []Castle
+	var total int64
+
+	// 查總數
+	if err := utils.DB.Model(&Castle{}).Count(&total).Error; err != nil {
+		return nil, 0, err
+	}
+
+	// 分頁查資料
+	offset := (page - 1) * pageSize
+	err := utils.DB.
+		Limit(pageSize).
+		Offset(offset).
+		Find(&castles).Error
+
+	return castles, total, err
 }
 
 type CastleType struct {

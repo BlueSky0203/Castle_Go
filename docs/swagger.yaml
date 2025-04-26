@@ -1,5 +1,5 @@
 definitions:
-  model.Castle:
+  models.Castle:
     properties:
       build_year:
         type: integer
@@ -16,7 +16,7 @@ definitions:
       type:
         type: integer
     type: object
-  model.CastleType:
+  models.CastleType:
     properties:
       created_at:
         type: string
@@ -41,11 +41,44 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/model.CastleType'
+              $ref: '#/definitions/models.CastleType'
             type: array
       summary: 取得所有城堡類型
       tags:
       - CastleType
+  /castles:
+    get:
+      consumes:
+      - application/json
+      description: 取得城堡列表，支援分頁
+      parameters:
+      - default: 1
+        description: 第幾頁
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: 每頁幾筆
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 取得城堡列表（分頁）
+      tags:
+      - 城堡
   /create-castle:
     post:
       consumes:
@@ -57,7 +90,7 @@ paths:
         name: castle
         required: true
         schema:
-          $ref: '#/definitions/model.Castle'
+          $ref: '#/definitions/models.Castle'
       produces:
       - application/json
       responses:

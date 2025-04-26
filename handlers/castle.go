@@ -2,12 +2,63 @@ package handlers
 
 import (
 	"net/http"
+	"strconv"
 
 	models "Castle_Go/models"
 	"Castle_Go/utils"
 
 	"github.com/gin-gonic/gin"
 )
+
+// GetAllCastleTypes 取得所有城堡類型
+// @Summary 取得所有城堡類型
+// @Tags CastleType
+// @Produce json
+// @Success 200 {array} models.CastleType
+// @Router /castle-types [get]
+func GetAllCastleTypes(c *gin.Context) {
+	var types []models.CastleType
+
+	if err := utils.DB.Find(&types).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve castle types"})
+		return
+	}
+	c.JSON(http.StatusOK, types)
+}
+
+// GetCastleListHandler 處理取得城堡列表（有分頁）
+// @Summary 取得城堡列表（分頁）
+// @Description 取得城堡列表，支援分頁
+// @Tags 城堡
+// @Accept json
+// @Produce json
+// @Param page query int false "第幾頁" default(1)
+// @Param pageSize query int false "每頁幾筆" default(10)
+// @Success 200 {object} map[string]interface{}
+// @Failure 500 {object} map[string]string
+// @Router /castles [get]
+func GetCastleListHandler(c *gin.Context) {
+	pageStr := c.DefaultQuery("page", "1")
+	pageSizeStr := c.DefaultQuery("pageSize", "12")
+
+	page, _ := strconv.Atoi(pageStr)
+	pageSize, _ := strconv.Atoi(pageSizeStr)
+
+	// 查資料
+	castles, total, err := models.GetCastleList(page, pageSize)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve castles"})
+		return
+	}
+
+	// 回傳格式加上 total
+	c.JSON(http.StatusOK, gin.H{
+		"total":    total,
+		"page":     page,
+		"pageSize": pageSize,
+		"castles":  castles,
+	})
+}
 
 // UploadCastleImage 上傳圖片並返回圖片 URL
 // @Summary 上傳城堡圖片
@@ -65,20 +116,4 @@ func CreateCastle(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Castle created successfully", "castle": castle})
-}
-
-// GetAllCastleTypes 取得所有城堡類型
-// @Summary 取得所有城堡類型
-// @Tags CastleType
-// @Produce json
-// @Success 200 {array} model.CastleType
-// @Router /castle-types [get]
-func GetAllCastleTypes(c *gin.Context) {
-	var types []models.CastleType
-
-	if err := utils.DB.Find(&types).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve castle types"})
-		return
-	}
-	c.JSON(http.StatusOK, types)
 }

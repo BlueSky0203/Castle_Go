@@ -30,7 +30,56 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/model.CastleType"
+                                "$ref": "#/definitions/models.CastleType"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/castles": {
+            "get": {
+                "description": "取得城堡列表，支援分頁",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "城堡"
+                ],
+                "summary": "取得城堡列表（分頁）",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "第幾頁",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "每頁幾筆",
+                        "name": "pageSize",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
                             }
                         }
                     }
@@ -57,7 +106,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Castle"
+                            "$ref": "#/definitions/models.Castle"
                         }
                     }
                 ],
@@ -145,7 +194,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "model.Castle": {
+        "models.Castle": {
             "type": "object",
             "properties": {
                 "build_year": {
@@ -171,7 +220,7 @@ const docTemplate = `{
                 }
             }
         },
-        "model.CastleType": {
+        "models.CastleType": {
             "type": "object",
             "properties": {
                 "created_at": {
