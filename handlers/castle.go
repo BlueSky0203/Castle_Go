@@ -45,7 +45,7 @@ func GetCastleListHandler(c *gin.Context) {
 	pageSize, _ := strconv.Atoi(pageSizeStr)
 
 	// 查資料
-	castles, total, err := models.GetCastleList(page, pageSize)
+	data, total, err := models.GetCastleList(page, pageSize)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve castles"})
 		return
@@ -56,7 +56,7 @@ func GetCastleListHandler(c *gin.Context) {
 		"total":    total,
 		"page":     page,
 		"pageSize": pageSize,
-		"castles":  castles,
+		"list":     data,
 	})
 }
 

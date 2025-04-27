@@ -23,7 +23,7 @@ func (Castle) TableName() string {
 }
 
 func GetCastleList(page, pageSize int) ([]Castle, int64, error) {
-	var castles []Castle
+	var data []Castle
 	var total int64
 
 	// 查總數
@@ -36,9 +36,9 @@ func GetCastleList(page, pageSize int) ([]Castle, int64, error) {
 	err := utils.DB.
 		Limit(pageSize).
 		Offset(offset).
-		Find(&castles).Error
+		Find(&data).Error
 
-	return castles, total, err
+	return data, total, err
 }
 
 type CastleType struct {
