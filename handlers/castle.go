@@ -86,7 +86,7 @@ func UploadCastleImage(c *gin.Context) {
 	}
 
 	// 返回上传的图片 URL
-	c.JSON(http.StatusOK, gin.H{"image_url": uploadResult.SecureURL})
+	c.JSON(http.StatusOK, gin.H{"message": "200", "image_url": uploadResult.SecureURL})
 }
 
 // CreateCastle 新增一筆城堡資料
@@ -115,5 +115,5 @@ func CreateCastle(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "Castle created successfully", "castle": castle})
+	c.JSON(http.StatusOK, gin.H{"message": "200", "castle": castle})
 }
