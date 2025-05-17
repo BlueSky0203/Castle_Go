@@ -1,4 +1,31 @@
 definitions:
+  handlers.LoginInput:
+    properties:
+      identifier:
+        description: 可以是 username 或 email
+        type: string
+      password:
+        type: string
+    required:
+    - identifier
+    - password
+    type: object
+  handlers.RegisterInput:
+    properties:
+      email:
+        type: string
+      full_name:
+        type: string
+      password:
+        minLength: 6
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - password
+    - username
+    type: object
   models.Castle:
     properties:
       build_year:
@@ -114,6 +141,74 @@ paths:
       summary: 新增城堡
       tags:
       - 城堡
+  /login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 登入資料
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.LoginInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 使用者登入
+      tags:
+      - Auth
+  /register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 註冊資料
+        in: body
+        name: register
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.RegisterInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 使用者註冊
+      tags:
+      - Auth
   /upload-castle-image:
     post:
       consumes:

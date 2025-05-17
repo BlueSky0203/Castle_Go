@@ -11,4 +11,6 @@ func SetupRoutes(r *gin.Engine) {
 	r.GET("/castles", handlers.GetCastleListHandler)
 	r.POST("/upload-castle-image", handlers.UploadCastleImage)
 	r.POST("/create-castle", handlers.CreateCastle)
+	r.POST("/login", handlers.Login)
+	r.POST("/register", handlers.Register)
 }

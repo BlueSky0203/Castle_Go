@@ -14,8 +14,9 @@
 
 - **Go**：後端語言
 - **Gin**：Web 框架
+- **GORM**：ORM 工具，用於與 PostgreSQL 資料庫互動
 - **Cloudinary**：圖片上傳及管理
-- **Swagger**：API 文檔生成
+- **Swagger**：API 文件生成
 
 ## 安裝與設置
 
