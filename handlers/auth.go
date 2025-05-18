@@ -72,5 +72,16 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"user": user})
+	// 產生 JWT token
+	token, err := utils.GenerateJWT(user.ID, user.Username)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "無法產生 JWT"})
+		return
+	}
+
+	// 回傳使用者資訊 + token
+	c.JSON(http.StatusOK, gin.H{
+		"user":  user,
+		"token": token,
+	})
 }

@@ -1,7 +1,10 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "Castle API for managing castles.",
+        "title": "Castle API",
+        "contact": {},
+        "version": "1.0"
     },
     "paths": {
         "/castle-types": {
@@ -77,6 +80,11 @@
         },
         "/create-castle": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "新增一筆城堡資料",
                 "consumes": [
                     "application/json"
@@ -234,6 +242,11 @@
         },
         "/upload-castle-image": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "上傳城堡圖片並儲存至 Cloudinary，返回圖片 URL",
                 "consumes": [
                     "multipart/form-data"
@@ -371,6 +384,13 @@
                     "type": "string"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }

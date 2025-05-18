@@ -88,6 +88,11 @@ const docTemplate = `{
         },
         "/create-castle": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "新增一筆城堡資料",
                 "consumes": [
                     "application/json"
@@ -245,6 +250,11 @@ const docTemplate = `{
         },
         "/upload-castle-image": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "上傳城堡圖片並儲存至 Cloudinary，返回圖片 URL",
                 "consumes": [
                     "multipart/form-data"
@@ -383,17 +393,24 @@ const docTemplate = `{
                 }
             }
         }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
     }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "",
+	Version:          "1.0",
 	Host:             "",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "",
-	Description:      "",
+	Title:            "Castle API",
+	Description:      "Castle API for managing castles.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

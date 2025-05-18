@@ -18,6 +18,12 @@ import (
 	_ "Castle_Go/docs"
 )
 
+// @title Castle API
+// @version 1.0
+// @description Castle API for managing castles.
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
 func main() {
 	// 加載環境變數
 	err := godotenv.Load()

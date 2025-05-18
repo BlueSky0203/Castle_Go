@@ -70,6 +70,7 @@ func GetCastleListHandler(c *gin.Context) {
 // @Success 200 {object} map[string]string
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
+// @Security BearerAuth
 // @Router /upload-castle-image [post]
 func UploadCastleImage(c *gin.Context) {
 	file, err := c.FormFile("image")
@@ -99,6 +100,7 @@ func UploadCastleImage(c *gin.Context) {
 // @Success 200 {object} map[string]interface{}
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
+// @Security BearerAuth
 // @Router /create-castle [post]
 func CreateCastle(c *gin.Context) {
 	var castle models.Castle

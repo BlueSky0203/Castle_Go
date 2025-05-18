@@ -58,6 +58,9 @@ definitions:
     type: object
 info:
   contact: {}
+  description: Castle API for managing castles.
+  title: Castle API
+  version: "1.0"
 paths:
   /castle-types:
     get:
@@ -138,6 +141,8 @@ paths:
             additionalProperties:
               type: string
             type: object
+      security:
+      - BearerAuth: []
       summary: 新增城堡
       tags:
       - 城堡
@@ -241,7 +246,14 @@ paths:
             additionalProperties:
               type: string
             type: object
+      security:
+      - BearerAuth: []
       summary: 上傳城堡圖片
       tags:
       - 圖片上傳
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"
