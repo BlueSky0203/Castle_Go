@@ -335,7 +335,7 @@ const docTemplate = `{
                 "email": {
                     "type": "string"
                 },
-                "full_name": {
+                "name": {
                     "type": "string"
                 },
                 "password": {

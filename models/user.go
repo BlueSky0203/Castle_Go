@@ -16,7 +16,7 @@ type User struct {
 	Username     string    `gorm:"unique;not null" json:"username"`
 	Email        string    `gorm:"unique;not null" json:"email"`
 	PasswordHash string    `gorm:"not null" json:"-"`
-	FullName     string    `json:"full_name"`
+	Name         string    `json:"name"`
 }
 
 // 這段讓 GORM 使用 "user" 而不是預設的 "users"
@@ -44,7 +44,7 @@ func AuthenticateUser(db *gorm.DB, identifier, password string) (*User, error) {
 }
 
 // 註冊
-func CreateUser(db *gorm.DB, username, email, password, fullName string) (*User, error) {
+func CreateUser(db *gorm.DB, username, email, password, name string) (*User, error) {
 	passwordHash, err := utils.HashPassword(password)
 	if err != nil {
 		return nil, err
@@ -54,7 +54,7 @@ func CreateUser(db *gorm.DB, username, email, password, fullName string) (*User,
 		Username:     username,
 		Email:        email,
 		PasswordHash: passwordHash,
-		FullName:     fullName,
+		Name:         name,
 	}
 
 	if err := db.Create(&user).Error; err != nil {

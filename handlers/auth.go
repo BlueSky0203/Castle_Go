@@ -12,7 +12,7 @@ type RegisterInput struct {
 	Username string `json:"username" binding:"required"`
 	Email    string `json:"email" binding:"required,email"`
 	Password string `json:"password" binding:"required,min=6"`
-	FullName string `json:"full_name"`
+	Name     string `json:"name"`
 }
 
 // Register 使用者註冊
@@ -32,7 +32,7 @@ func Register(c *gin.Context) {
 		return
 	}
 
-	user, err := models.CreateUser(utils.DB, input.Username, input.Email, input.Password, input.FullName)
+	user, err := models.CreateUser(utils.DB, input.Username, input.Email, input.Password, input.Name)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -81,7 +81,8 @@ func Login(c *gin.Context) {
 
 	// 回傳使用者資訊 + token
 	c.JSON(http.StatusOK, gin.H{
-		"user":  user,
-		"token": token,
+		"message": "200",
+		"user":    user,
+		"token":   token,
 	})
 }
