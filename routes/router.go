@@ -20,6 +20,8 @@ func SetupRoutes(r *gin.Engine) {
 	{
 		auth.POST("/upload-castle-image", handlers.UploadCastleImage)
 		auth.POST("/create-castle", handlers.CreateCastle)
-		// 其他需要驗證的 CRUD 都可以加在這
+		auth.GET("/favorites", handlers.GetFavorites)
+		auth.POST("/favorites", handlers.AddFavorite)
+		auth.DELETE("/favorites/:castle_id", handlers.RemoveFavorite)
 	}
 }

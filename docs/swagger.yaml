@@ -1,4 +1,11 @@
 definitions:
+  handlers.AddFavoriteInput:
+    properties:
+      castle_id:
+        type: integer
+    required:
+    - castle_id
+    type: object
   handlers.LoginInput:
     properties:
       identifier:
@@ -146,6 +153,100 @@ paths:
       summary: 新增城堡
       tags:
       - 城堡
+  /favorites:
+    get:
+      description: 取得目前使用者的所有收藏城堡
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: 取得收藏列表
+      tags:
+      - 收藏
+    post:
+      consumes:
+      - application/json
+      description: 新增或恢復一筆使用者的收藏城堡資料，若已存在則恢復為收藏狀態
+      parameters:
+      - description: 收藏資料
+        in: body
+        name: favorite
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.AddFavoriteInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: 新增收藏
+      tags:
+      - 收藏
+  /favorites/{castle_id}:
+    delete:
+      description: 將使用者對指定城堡的收藏標記為取消（type 設為 0）
+      parameters:
+      - description: 城堡 ID
+        in: path
+        name: castle_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: 取消收藏
+      tags:
+      - 收藏
   /login:
     post:
       consumes:
