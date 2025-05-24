@@ -17,7 +17,7 @@ type Favorite struct {
 func GetFavoriteList(userID uint) ([]Favorite, error) {
 	var favorite []Favorite
 	err := utils.DB.
-		Where("user_id = ?", userID).
+		Where("user_id = ? AND type = 1", userID).
 		Preload("Castle").
 		Find(&favorite).Error
 	return favorite, err

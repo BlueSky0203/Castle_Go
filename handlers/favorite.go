@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// GetFavorites 取得我的收藏列表
+// GetFavoriteList 取得我的收藏列表
 // @Summary 取得收藏列表
 // @Description 取得目前使用者的所有收藏城堡
 // @Tags 收藏
@@ -18,7 +18,7 @@ import (
 // @Failure 500 {object} map[string]string
 // @Router /favorites [get]
 // @Security BearerAuth
-func GetFavorites(c *gin.Context) {
+func GetFavoriteList(c *gin.Context) {
 	userID := c.MustGet("userID").(uint)
 
 	favorites, err := models.GetFavoriteList(userID)

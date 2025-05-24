@@ -20,7 +20,7 @@ func SetupRoutes(r *gin.Engine) {
 	{
 		auth.POST("/upload-castle-image", handlers.UploadCastleImage)
 		auth.POST("/create-castle", handlers.CreateCastle)
-		auth.GET("/favorites", handlers.GetFavorites)
+		auth.GET("/favorites", handlers.GetFavoriteList)
 		auth.POST("/favorites", handlers.AddFavorite)
 		auth.DELETE("/favorites/:castle_id", handlers.RemoveFavorite)
 	}
