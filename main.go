@@ -28,7 +28,7 @@ func main() {
 	// 加載環境變數
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Println("No .env file found, continuing without it.")
 	}
 
 	// 嘗試連接資料庫
@@ -39,7 +39,11 @@ func main() {
 
 	// 加上 CORS 中介軟體
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:5173"}, // 允許前端開發機器存取
+		AllowOrigins: []string{
+			"http://localhost:5173",
+			"https://castle-99e47.web.app",         // Firebase Hosting 網址
+			"https://castle-99e47.firebaseapp.com", // 備用網址
+		},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
