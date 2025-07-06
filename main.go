@@ -31,6 +31,9 @@ func main() {
 		log.Println("No .env file found, continuing without it.")
 	}
 
+	// 初始化 Firebase
+	utils.InitFirebase()
+
 	// 嘗試連接資料庫
 	utils.ConnectDatabase()
 

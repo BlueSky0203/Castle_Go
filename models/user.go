@@ -3,6 +3,7 @@ package models
 import (
 	"Castle_Go/utils"
 	"errors"
+	"strings"
 	"time"
 
 	"gorm.io/gorm"
@@ -61,5 +62,30 @@ func CreateUser(db *gorm.DB, username, email, password, name string) (*User, err
 		return nil, err
 	}
 
+	return &user, nil
+}
+
+func AuthenticateFirebase(db *gorm.DB, email, name string) (*User, error) {
+	var user User
+	if err := db.Where("email = ?", email).First(&user).Error; err == nil {
+		// 找到就回傳
+		return &user, nil
+	} else if !errors.Is(err, gorm.ErrRecordNotFound) {
+		// 其他錯誤回傳
+		return nil, err
+	}
+
+	// 沒找到，新增 user
+	username := strings.Split(email, "@")[0]
+	user = User{
+		Username:     username,
+		Email:        email,
+		PasswordHash: "", // Firebase 登入不用密碼
+		Name:         name,
+	}
+
+	if err := db.Create(&user).Error; err != nil {
+		return nil, err
+	}
 	return &user, nil
 }

@@ -13,6 +13,7 @@ func SetupRoutes(r *gin.Engine) {
 	r.GET("/castles", handlers.GetCastleListHandler)
 	r.POST("/login", handlers.Login)
 	r.POST("/register", handlers.Register)
+	r.POST("/firebase-login", handlers.FirebaseLogin)
 
 	// 需要登入後才可用的
 	auth := r.Group("/")

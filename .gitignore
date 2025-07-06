@@ -52,3 +52,5 @@ tmp/
 *.log
 
 *.jpg
+
+firebase-admin.json
