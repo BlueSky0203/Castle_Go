@@ -1,6 +1,7 @@
 package main
 
 import (
+	"Castle_Go/metrics"
 	"Castle_Go/websocket"
 	"fmt"
 	"log"
@@ -64,6 +65,8 @@ func main() {
 
 	// WebSocket Hub
 	hub := websocket.NewHub()
+	go metrics.StartMonitoringPublisher()
+	go metrics.StartRedisSubscriber(hub)
 	go hub.Run()
 
 	// WebSocket 加入到 Gin 路由
