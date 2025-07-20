@@ -33,6 +33,10 @@ func main() {
 		log.Println("No .env file found, continuing without it.")
 	}
 
+	if err := utils.InitRedis(); err != nil {
+		log.Fatalf("Failed to init Redis: %v", err)
+	}
+
 	// 初始化 Firebase & DB
 	utils.InitFirebase()
 	utils.ConnectDatabase()
@@ -41,21 +45,21 @@ func main() {
 	r := gin.Default()
 
 	// CORS
+	corsMiddleware := cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:5173", "https://castle-99e47.web.app", "https://castle-99e47.firebaseapp.com"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	})
+
 	r.Use(func(c *gin.Context) {
 		if c.Request.URL.Path == "/ws" {
-			// WebSocket路由跳過中介軟體，讓底層websocket.Upgrader處理origin
 			c.Next()
 			return
 		}
-		// 其他路由走CORS
-		cors.New(cors.Config{
-			AllowOrigins:     []string{"http://localhost:5173", "https://castle-99e47.web.app", "https://castle-99e47.firebaseapp.com"},
-			AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-			AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
-			ExposeHeaders:    []string{"Content-Length"},
-			AllowCredentials: true,
-			MaxAge:           12 * time.Hour,
-		})(c)
+		corsMiddleware(c)
 	})
 
 	// WebSocket Hub
